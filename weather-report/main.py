@@ -64,7 +64,6 @@ def make_hourly_msg(hours):
         description = weather[0].get("description")
 
         # Only print hourly forecast if rain or snow is expected
-        hour_msg = ""
         if "rain" in description or "snow" in description:
             hour_msg = f"{timestamp_tz.strftime('%-I%p')}: {math.floor(temp)}"
             hour_msg += f" {description}"
