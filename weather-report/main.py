@@ -63,8 +63,9 @@ def make_hourly_msg(hours):
         weather = hour.get("weather")
         description = weather[0].get("description")
 
-        hour_msg = f"{timestamp_tz.strftime('%-I%p')}: {math.floor(temp)}"
+        # Only print hourly forecast if rain or snow is expected
         if "rain" in description or "snow" in description:
+            hour_msg = f"{timestamp_tz.strftime('%-I%p')}: {math.floor(temp)}"
             hour_msg += f" {description}"
 
         msg += f"{hour_msg}\n"
@@ -75,8 +76,10 @@ def make_hourly_msg(hours):
 def make_daily_msg(daily):
     msg = ""
 
-    # Daily forecast
-    for day in daily:
+    # Today and tomorrow
+    for x in range(0, 2):
+        day = daily[x]
+
         timestamp = datetime.fromtimestamp(day.get("dt")).strftime("%A, %Y-%m-%d")
         temp = day.get("temp")
         weather = day.get("weather")
