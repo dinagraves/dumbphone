@@ -68,7 +68,7 @@ def make_hourly_msg(hours):
             hour_msg = f"{timestamp_tz.strftime('%-I%p')}: {math.floor(temp)}"
             hour_msg += f" {description}"
 
-        msg += f"{hour_msg}\n"
+            msg += f"{hour_msg}\n"
 
     return msg
 
