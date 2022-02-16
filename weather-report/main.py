@@ -16,7 +16,6 @@ HOME_LATLON = "lat=37.386051&lon=-122.083855"
 TO_NUMBERS = ["+15555551234", "+15555551235"]
 MY_TIMEZONE = pytz.timezone("US/Pacific")
 
-
 def daily_update(request):
     req_url = (
         f"{BASE_URL}onecall?{HOME_LATLON}&appid={API_KEY}"
@@ -96,13 +95,17 @@ def make_daily_msg(daily):
             f"Weather: {weather[0].get('description')}\n"
         )
 
+        # Rain and snow are reported in mm.
+        # Convert to inches.
         rain = day.get("rain")
         if rain:
-            day_msg += f"Rain Inches: {rain}\n"
+            rain_inches = round(float(rain)/25.4, 1)
+            day_msg += f"Rain Inches: {rain_inches}\n"
 
         snow = day.get("snow")
         if snow:
-            day_msg += f"Snow Inches: {snow}\n"
+            snow_inches = round(float(snow)/25.4, 1)
+            day_msg += f"Snow Inches: {snow_inches}\n"
         msg += day_msg + "\n"
 
     return msg
