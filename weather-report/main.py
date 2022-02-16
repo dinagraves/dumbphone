@@ -34,12 +34,17 @@ def daily_update(request):
     msg = ""
     if alerts:
         msg += "## ALERTS ##" f"{alerts}\n"
+    
     msg += (
         "\n## DAILY FORECAST ##\n"
         f"{daily_forecast}\n"
-        "## HOURLY FORECAST ##\n"
-        f"{hourly_forecast}\n"
     )
+
+    if hourly_forecast:
+        msg+= (
+          "## HOURLY FORECAST ##\n"
+          f"{hourly_forecast}\n"
+          )
 
     twilio_responses = []
 
@@ -65,7 +70,7 @@ def make_hourly_msg(hours):
 
         # Only print hourly forecast if rain or snow is expected
         if "rain" in description or "snow" in description:
-            hour_msg = f"{timestamp_tz.strftime('%-I%p')}: {math.floor(temp)}"
+            hour_msg = f"{timestamp_tz.strftime('%a %-I%p')}: {math.floor(temp)}"
             hour_msg += f" {description}"
 
             msg += f"{hour_msg}\n"
