@@ -33,11 +33,11 @@ def daily_update(request):
 
     msg = ""
     if alerts:
-        msg += "#### ALERTS ####" f"{alerts}\n"
+        msg += "## ALERTS ##" f"{alerts}\n"
     msg += (
-        "\n#### DAILY FORECAST ####\n"
+        "\n## DAILY FORECAST ##\n"
         f"{daily_forecast}\n"
-        "#### HOURLY FORECAST ####\n"
+        "## HOURLY FORECAST ##\n"
         f"{hourly_forecast}\n"
     )
 
