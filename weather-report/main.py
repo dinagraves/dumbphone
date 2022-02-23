@@ -16,10 +16,12 @@ HOME_LATLON = "lat=37.386051&lon=-122.083855"
 TO_NUMBERS = ["+15555551234", "+15555551235"]
 MY_TIMEZONE = pytz.timezone("US/Pacific")
 
+
 def daily_update(request):
     req_url = (
         f"{BASE_URL}onecall?{HOME_LATLON}&appid={API_KEY}"
-        "&units=imperial&exclude=minutely")
+        "&units=imperial&exclude=minutely"
+    )
     req = urllib.request.Request(req_url)
 
     response = urllib.request.urlopen(req)
@@ -33,17 +35,11 @@ def daily_update(request):
     if alerts:
         for number in TO_NUMBERS:
             twilio_responses.append(send_msg(alerts, number))
-    
-    msg = (
-        "\n## DAILY FORECAST ##\n"
-        f"{daily_forecast}\n"
-    )
+
+    msg = "\n## DAILY FORECAST ##\n" f"{daily_forecast}\n"
 
     if hourly_forecast:
-        msg+= (
-          "## HOURLY FORECAST ##\n"
-          f"{hourly_forecast}\n"
-          )
+        msg += "## HOURLY FORECAST ##\n" f"{hourly_forecast}\n"
 
     twilio_responses = []
 
@@ -99,12 +95,12 @@ def make_daily_msg(daily):
         # Convert to inches.
         rain = day.get("rain")
         if rain:
-            rain_inches = round(float(rain)/25.4, 1)
+            rain_inches = round(float(rain) / 25.4, 1)
             day_msg += f"Rain Inches: {rain_inches}\n"
 
         snow = day.get("snow")
         if snow:
-            snow_inches = round(float(snow)/25.4, 1)
+            snow_inches = round(float(snow) / 25.4, 1)
             day_msg += f"Snow Inches: {snow_inches}\n"
         msg += day_msg + "\n"
 
