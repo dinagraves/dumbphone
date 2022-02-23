@@ -30,11 +30,11 @@ def daily_update(request):
     hourly_forecast = make_hourly_msg(data.get("hourly"))
     alerts = data.get("alerts")
 
-    msg = ""
     if alerts:
-        msg += "## ALERTS ##" f"{alerts}\n"
+        for number in TO_NUMBERS:
+            twilio_responses.append(send_msg(alerts, number))
     
-    msg += (
+    msg = (
         "\n## DAILY FORECAST ##\n"
         f"{daily_forecast}\n"
     )
